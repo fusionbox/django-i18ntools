@@ -5,7 +5,10 @@ when you run "manage.py test".
 Replace this with more appropriate tests for your application.
 """
 
-import urllib
+try:
+    from urllib.parse import urlencode
+except ImportError:  # Python 2
+    from urllib import urlencode
 
 from django.test import TestCase
 from django.utils.translation import activate
@@ -18,7 +21,7 @@ from i18ntools.utils import url_for_language
 
 def build_url(path, **kwargs):
     if kwargs:
-        path += '?' + urllib.urlencode(kwargs)
+        path += '?' + urlencode(kwargs)
     return path
 
 
