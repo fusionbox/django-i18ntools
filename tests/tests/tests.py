@@ -11,7 +11,7 @@ except ImportError:  # Python 2
     from urllib import urlencode
 
 from django.test import TestCase
-from django.utils.translation import activate
+from django.utils.translation import activate, get_language
 from django.template import Template, Context
 from django.core.urlresolvers import reverse
 
@@ -52,6 +52,20 @@ class UrlForLanguageTest(TestCase):
         activate('en')
         self.assertEqual(url_for_language('/enable/', 'en'), '/en/enable/')
         self.assertEqual(url_for_language('/enable/', 'es'), '/es/enable/')
+
+    def test_translated_urls(self):
+        activate('en')
+        url = reverse('translated_url', kwargs={'k1': 'foo'})
+
+        self.assertEqual(url, '/en/the-url/foo/')
+        self.assertEqual(url_for_language(url, 'es'), '/es/el-url/foo/')
+
+    def test_translated_unnamed_urls(self):
+        activate('en')
+        url = reverse('tests.urls.unnamed_view', kwargs={'k1': 'foo'})
+
+        self.assertEqual(url, '/en/the-unnamed-url/foo/')
+        self.assertEqual(url_for_language(url, 'es'), '/es/el-url-sin-nombre/foo/')
 
 
 class ActivateTest(TestCase):

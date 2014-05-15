@@ -25,7 +25,11 @@ a URL.
 
   
     Takes a URL for the current language and a target language and adds the
-    i18n_patterns prefix for that target language. ::
+    i18n_patterns prefix for that target language.  It does this using two
+    strategies, first by resolving the URL and the re-reversing it using the
+    new language, if that doesn't work (for example if the URL doesn't exist in
+    the URLConf), then :func:`url_for_language` will try to simply substitute
+    the language code in the URL. ::
 
         >>> from django.utils.translation import activate
         >>> from i18ntools.utils import url_for_language

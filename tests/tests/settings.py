@@ -1,3 +1,7 @@
+import os
+
+PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
+
 SECRET_KEY = 'w6bidenrf5q%byf-q82b%pli50i0qmweus6gt_3@k$=zg7ymd3'
 
 INSTALLED_APPS = (
@@ -16,6 +20,10 @@ DATABASES = {
         'NAME': '',
     }
 }
+
+LOCALE_PATHS = (
+    os.path.join(PROJECT_PATH, '..', 'locales'),
+)
 
 ROOT_URLCONF = 'tests.urls'
 
