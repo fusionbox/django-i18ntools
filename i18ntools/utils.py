@@ -4,8 +4,17 @@ except ImportError: # Python 2
     from urlparse import urlparse, urlunparse
 
 from itertools import chain
+from contextlib import contextmanager
 
-from django.utils.translation import get_language
+from django.utils.translation import get_language, activate
+
+
+@contextmanager
+def language_context(new_language):
+    current_language = get_language()
+    activate(new_language)
+    yield
+    activate(current_language)
 
 
 def url_for_language(url, new_language):

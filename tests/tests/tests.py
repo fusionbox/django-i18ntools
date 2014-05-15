@@ -16,7 +16,7 @@ from django.template import Template, Context
 from django.core.urlresolvers import reverse
 
 
-from i18ntools.utils import url_for_language
+from i18ntools.utils import url_for_language, language_context
 
 
 def build_url(path, **kwargs):
@@ -52,6 +52,15 @@ class UrlForLanguageTest(TestCase):
         activate('en')
         self.assertEqual(url_for_language('/enable/', 'en'), '/en/enable/')
         self.assertEqual(url_for_language('/enable/', 'es'), '/es/enable/')
+
+
+class ActivateTest(TestCase):
+    def test_activate(self):
+        activate('en')
+        self.assertEqual(get_language(), 'en')
+        with language_context('es'):
+            self.assertEqual(get_language(), 'es')
+        self.assertEqual(get_language(), 'en')
 
 
 class TemplateTagsTest(TestCase):

@@ -7,6 +7,20 @@ a URL.
 
 .. currentmodule:: i18ntools.utils
 
+
+.. function:: language_context(language_code)
+
+    Returns a context manager with the language specified enabled.  The
+    previous language will restored on exit.
+
+        >>> from django.utils.translation import ugettext
+        >>> from i18ntools.utils import language_context
+        >>> with language_code('es'):
+        >>>     ugettext(u'Hello')
+        u'Hola'
+        >>> ugettext(u'Hello')
+        u'Hello'
+
 .. function:: url_for_language(url, language_code)
 
   
